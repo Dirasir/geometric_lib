@@ -3,23 +3,12 @@ name: Run Unit Tests on Push
 on: [push]
 
 jobs:
-  test-on-ubuntu:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Run unit tests
-        run: |
-          python -m unittest test_geometry.GeometryTestCase
-
-  test-on-windows:
-    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
